@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    container_name: url-shortener-frontend
+    ports:
+      - "4200:80"
+    environment:
+      - BASE_URL=http://localhost:8000
+      - HOST_NAME=http://localhost:8000
+    restart: always
