@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './layout/layout.component';
+import { LinksComponent } from './links/links.component';
+import { LinkCreationComponent } from './link-creation/link-creation.component';
+import { LinkAnalyticsComponent } from './link-analytics/link-analytics.component';
 
 
 export const routes: Routes = [
@@ -17,6 +20,19 @@ export const routes: Routes = [
             {
                 path: 'dashboard',
                 component: DashboardComponent
+            },
+            {
+                path: 'links',
+                component: LinksComponent
+            },
+
+            {
+                path: 'link-creation',
+                component: LinkCreationComponent
+            },
+            {
+                path: 'link-analytics',
+                component: LinkAnalyticsComponent
             },
         ]
     },

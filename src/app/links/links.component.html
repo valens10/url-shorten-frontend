@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="w-100 d-flex align-items-center justify-content-between mb-16">
+        <h1 class="orb-typography h1">Bitly Links</h1>
+        <button class="btn btn-primary" routerLink="/home/link-creation" type="button">Create
+            link</button>
+    </div>
+
+    <div class="content mb-3">
+        <div class="row pt-4">
+            <div class="col-5">
+                <div class="flex-grow-1">
+                    <input class="form-control" type="text" placeholder="Search links..">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- section of list of links -->
+    <div class="w-100 bg-light">
+        <div class="link-card  pt-1 ps-3 pe-3" *ngFor="let item of user_urls; let i = index">
+            <div class="link-card__container">
+                <div class="link-card-icon-information">
+                    <div class="link-card__info-container">
+                        <h3 class="orb-typography h3" (click)="gotoUrl(item?.short_code)">
+                            <a [href]="host_name + item?.short_code">Link {{i + 1}}</a>
+                        </h3>
+                        <div class="link-card__info-container__body">
+                            <div class="d-flex flex-column">
+                                <a target="_blank" rel="noopener noreferrer" class="orb-link text-muted orb-typography"
+                                    [href]="host_name + item?.short_code">
+                                    {{item.short_code}}
+                                </a>
+                                <a target="_blank" rel="noopener noreferrer" class="orb-link orb-typography"
+                                    [href]="host_name + item?.short_code">
+                                    {{item?.long_url}}
+                                </a>
+                                <p class="orb-typography">
+                                    Clicks: {{item?.clicks}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="orb-divider" data-testid="divider">
+                <div class="flex-col justify-content-between gap-8">
+                    <div class="link-card__button-container">
+                        <button class="orb-button btn me-3 neutral-primary link-card-button__copy" type="button">
+                            Copy
+                        </button>
+                        <button class="btn btn-outline-danger text-danger" (click)="deleleUrlModal(item.id)"
+                            type="button" [disabled]="isSubmitting">
+                            <!-- Loading spinner (visible only when isSubmitting is true) -->
+                            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true"></span>
+
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+        </div>
+    </div>
+</div>

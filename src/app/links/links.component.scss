@@ -1,0 +1,50 @@
+.container {
+    padding: 15px !important;
+}
+
+.link-card {
+    display: flex;
+    background: #fff;
+    border: .1rem solid #fff;
+    border-radius: .8rem;
+    flex-direction: column;
+    position: relative;
+}
+
+.link-card__container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-1,
+.link-card__container .link-card-icon-information {
+    flex: 1;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #333;
+    transition: color 0.3s ease-in-out;
+}
+
+.link-card__container .link-card-icon-information {
+    display: flex;
+    gap: 1.6rem;
+    flex-direction: row;
+}
+
+
+.link-card__button-container .link-card-button {
+    font-size: 1.4rem;
+    min-height: 3.2rem;
+    padding: 0 .7rem;
+}
+
+.orb-button.neutral-primary {
+    background: #e8ebf2;
+    color: #273144;
+}

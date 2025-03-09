@@ -74,6 +74,8 @@ export class RegisterComponent implements OnInit {
   }
 
 
+
+
   errAlert(msg: any) {
     Swal.fire({
       title: 'Error',

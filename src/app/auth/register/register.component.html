@@ -97,11 +97,11 @@
                                 <div data-mdb-input-init class="form-outline mb-4">
                                     <input type="password" id="password" class="form-control" formControlName="password"
                                         [ngClass]="{ 'is-invalid': f['password'].invalid && f['password'].touched }" />
-                                    <label class="form-label" for="password">Password</label>
+                                    <label class="form-label" for="password">Password <span
+                                            class="text-danger">*</span></label>
                                     <div *ngIf="f['password'].touched && f['password'].invalid" class="text-danger">
                                         <div *ngIf="f['password'].hasError('pattern')">Password must contain at least
-                                            one lowercase letter, one
-                                            uppercase letter, one number, and one special character.</div>
+                                            URL is required.</div>
                                     </div>
                                 </div>
 

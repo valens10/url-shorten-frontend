@@ -52,9 +52,35 @@ export class ApiService {
     return this.http.post(this.BASE_URL + endpoint, data, this.headers)
   }
 
-  user_login(data: any): Observable<any> {
-    const endpoint = '/auth/login';
+  shorten_url(data: any): Observable<any> {
+    const endpoint = '/api/shorten';
     return this.http.post(this.BASE_URL + endpoint, data, this.headers)
+  }
+
+  delete_url(url_id: any): Observable<any> {
+    const endpoint = '/auth/delete_url/' + url_id;
+    return this.http.delete(this.BASE_URL + endpoint, this.headers)
+  }
+
+  logout(): Observable<any> {
+    const endpoint = '/auth/logout';
+    return this.http.get(this.BASE_URL + endpoint, this.headers)
+  }
+
+  get_user_url(): Observable<any> {
+    const endpoint = '/api/urls';
+    return this.http.get(this.BASE_URL + endpoint, this.headers)
+  }
+
+  user_login(data: any): Observable<any> {
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      }),
+    };
+    const endpoint = '/auth/login';
+    return this.http.post(this.BASE_URL + endpoint, data, headers)
   }
 
   create_client_access_permissions(data: any): Observable<any> {
