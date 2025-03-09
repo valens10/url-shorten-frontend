@@ -9,7 +9,8 @@
         <div class="row pt-4">
             <div class="col-5">
                 <div class="flex-grow-1">
-                    <input class="form-control" type="text" placeholder="Search links..">
+                    <input (keyup)="onSearch($event)" class="form-control border-0" type="text"
+                        placeholder="Search links..">
                 </div>
             </div>
 
@@ -18,11 +19,11 @@
 
     <!-- section of list of links -->
     <div class="w-100 bg-light">
-        <div class="link-card  pt-1 ps-3 pe-3" *ngFor="let item of user_urls; let i = index">
+        <div class="link-card  pt-1 ps-3 pe-3" *ngFor="let item of filterResults; let i = index">
             <div class="link-card__container">
                 <div class="link-card-icon-information">
                     <div class="link-card__info-container">
-                        <h3 class="orb-typography h3" (click)="gotoUrl(item?.short_code)">
+                        <h3 class="orb-typography h3">
                             <a [href]="host_name + item?.short_code">Link {{i + 1}}</a>
                         </h3>
                         <div class="link-card__info-container__body">
@@ -45,7 +46,8 @@
                 <hr class="orb-divider" data-testid="divider">
                 <div class="flex-col justify-content-between gap-8">
                     <div class="link-card__button-container">
-                        <button class="orb-button btn me-3 neutral-primary link-card-button__copy" type="button">
+                        <button class="orb-button btn me-3 neutral-primary link-card-button__copy"
+                            (click)="copyToClipboard(host_name + item?.short_code)" type="button">
                             Copy
                         </button>
                         <button class="btn btn-outline-danger text-danger" (click)="deleleUrlModal(item.id)"
@@ -60,7 +62,6 @@
                 </div>
             </div>
             <hr>
-
         </div>
     </div>
 </div>

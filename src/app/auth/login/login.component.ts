@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ApiService } from '../../service/api-service.service';
 import Swal from 'sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, HttpClientModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterLink, HttpClientModule],
   providers: [ApiService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -51,7 +51,10 @@ export class LoginComponent implements OnInit {
     this.apiSerice.user_login(param).subscribe((res) => {
       this.isSubmitting = false;
 
-      window.sessionStorage.setItem('user', JSON.stringify(res?.data))
+      let data = res.data
+      data['token_expiry'] = new Date().getTime() + 15 * 60 * 1000 // Adding 15 minutes expiration time
+
+      window.sessionStorage.setItem('user', JSON.stringify(data))
       window.location.href = '/home/dashboard'
 
     }, err => {

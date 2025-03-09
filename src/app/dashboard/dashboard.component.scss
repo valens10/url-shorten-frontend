@@ -2,6 +2,8 @@
     max-width: 10rem;
 }
 
+
+
 .col-card {
     max-width: 350px !important;
 }
@@ -9,5 +11,16 @@
 .image-block {
     padding: 3px !important;
     background-color: #f3f9fe;
+    overflow: hidden;
+}
+
+.img-pi {
+    width: 8rem !important;
+    border-radius: 5px;
+}
+
+.image-blockx {
+    max-height: 100px !important;
+    object-fit: cover;
     overflow: hidden;
 }

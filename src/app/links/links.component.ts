@@ -30,9 +30,11 @@ export class LinksComponent implements OnInit {
   }
 
   user_urls: any = []
+  filterResults: any = []
   get_user_url() {
     this.apiSerice.get_user_url().subscribe((res) => {
       this.user_urls = res?.data;
+      this.filterResults = this.user_urls;
     }, err => {
       this.errAlert(err.error.message)
     })
@@ -78,6 +80,39 @@ export class LinksComponent implements OnInit {
 
   gotoUrl(url_id: any) {
 
+  }
+
+  copyToClipboard(text: string) {
+    // Use the Clipboard API to copy the text to the clipboard
+    navigator.clipboard.writeText(text).then(
+      () => {
+        Swal.fire('Success', 'Copied to clipboard', 'success')
+      },
+      (err) => {
+        console.error('Failed to copy: ', err);
+        alert('Failed to copy URL.');
+      }
+    );
+  }
+
+  onSearch(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.filterResults = this.user_urls.filter((element: any) => {
+      return (
+        element.short_code
+          ?.trim()
+          .toLowerCase()
+          .includes(filterValue.trim().toLowerCase()) ||
+        element.clicks
+          ?.toString()
+          ?.trim()
+          .includes(filterValue.trim().toLowerCase()) ||
+        element.id
+          ?.toString()
+          .trim()
+          .includes(filterValue.trim().toLowerCase())
+      );
+    });
   }
 
   errAlert(msg: any) {

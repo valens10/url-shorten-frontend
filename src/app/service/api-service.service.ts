@@ -67,8 +67,18 @@ export class ApiService {
     return this.http.get(this.BASE_URL + endpoint, this.headers)
   }
 
+  refresh_token(): Observable<any> {
+    const endpoint = '/auth/refresh_token';
+    return this.http.get(this.BASE_URL + endpoint, this.headers)
+  }
+
   get_user_url(): Observable<any> {
     const endpoint = '/api/urls';
+    return this.http.get(this.BASE_URL + endpoint, this.headers)
+  }
+
+  link_analytics(short_url: any): Observable<any> {
+    const endpoint = '/api/analytics/' + short_url;
     return this.http.get(this.BASE_URL + endpoint, this.headers)
   }
 

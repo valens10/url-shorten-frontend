@@ -22,12 +22,34 @@ export class LinkAnalyticsComponent implements OnInit {
   }
 
   user_urls: any = []
+  filterResults: any = []
   get_user_url() {
     this.apiService.get_user_url().subscribe((res) => {
       this.user_urls = res?.data;
+      this.filterResults = res?.data;
     }, err => {
       console.log(err?.message)
     })
+  }
+
+  onSearch(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.filterResults = this.user_urls.filter((element: any) => {
+      return (
+        element.short_code
+          ?.trim()
+          .toLowerCase()
+          .includes(filterValue.trim().toLowerCase()) ||
+        element.clicks
+          ?.toString()
+          ?.trim()
+          .includes(filterValue.trim().toLowerCase()) ||
+        element.id
+          ?.toString()
+          .trim()
+          .includes(filterValue.trim().toLowerCase())
+      );
+    });
   }
 
 

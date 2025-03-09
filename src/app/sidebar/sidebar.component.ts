@@ -8,5 +8,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
+  user: any = '';
 
+  constructor(
+  ) {
+    this.user = JSON.parse(
+      window.sessionStorage.getItem('user') as string);
+  }
 }

@@ -1,0 +1,45 @@
+/* url-analytics.component.css */
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.card-body {
+    font-family: 'Arial', sans-serif;
+}
+
+h5,
+h6 {
+    font-weight: 600;
+    color: #495057;
+}
+
+p {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+a {
+    color: #007bff;
+    font-size: 1.2rem;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.list-group-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    margin-bottom: 5px;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+}

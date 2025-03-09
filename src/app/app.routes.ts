@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { LinksComponent } from './links/links.component';
 import { LinkCreationComponent } from './link-creation/link-creation.component';
 import { LinkAnalyticsComponent } from './link-analytics/link-analytics.component';
+import { AnalyticsViewComponent } from './analytics-view/analytics-view.component';
 
 
 export const routes: Routes = [
@@ -33,6 +34,10 @@ export const routes: Routes = [
             {
                 path: 'link-analytics',
                 component: LinkAnalyticsComponent
+            },
+            {
+                path: 'link-analytics/:link_id',
+                component: AnalyticsViewComponent
             },
         ]
     },

@@ -1,1 +1,81 @@
-<p>analytics-view works!</p>
+<div class="container">
+    <div class="w-100  mb-16">
+        <h1 class="orb-typography h1">Link Analytics</h1>
+    </div>
+
+
+    <div class="card  my-5">
+        <div class="card-header">
+            <h5 class="mb-0">URL Analytics</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Shortened URL:</h5>
+                    <a [href]="host_name + urlData.shortened_url" target="_blank" class="text-decoration-none">
+                        <p>{{ urlData.short_code }}</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <h5>Original URL:</h5>
+                    <a [href]="host_name + urlData.shortened_url" target="_blank" class="text-decoration-none">
+                        <p>{{ urlData.long_url }}</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Total Clicks:</h5>
+                    <p>{{ urlData.total_clicks }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Created At:</h5>
+                    <p>{{ urlData.created_at | date: 'yyyy-MM-dd HH:mm' }}</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <h5>Click Distribution:</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>Daily</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between"
+                            *ngFor="let day of getClickDistribution(urlData.click_distribution?.daily)">
+                            <p>{{ day.key }}</p>
+                            <p>
+                                {{ day.value }} Click{{ day.value > 1 ? 's' : '' }}
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>Weekly</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between"
+                            *ngFor="let week of getClickDistribution(urlData.click_distribution?.weekly)">
+                            <p>{{ week.key }}</p>
+                            <p>{{ week.value }} Click{{ week.value > 1 ? 's' : '' }}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>Monthly</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between"
+                            *ngFor="let month of getClickDistribution(urlData.click_distribution?.monthly)">
+                            <p>{{ month.key }}</p> <!-- Displaying the month key (e.g., '2025-03') -->
+                            <p>{{ month.value }} Click{{ month.value > 1 ? 's' : '' }}</p>
+                            <!-- Displaying the number of clicks -->
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

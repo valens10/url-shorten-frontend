@@ -4,12 +4,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ApiService } from '../../service/api-service.service';
 import Swal from 'sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, HttpClientModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterLink, HttpClientModule],
   providers: [ApiService],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
