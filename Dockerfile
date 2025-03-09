@@ -11,6 +11,8 @@ RUN npm run build
 
 # Use Nginx for serving the built application
 FROM nginx:alpine AS production-stage
-COPY --from=build-stage /app/dist/url_shorten /usr/share/nginx/html
+
+COPY --from=build-stage /app/dist/url-shorten /usr/share/nginx/html
+
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]  # Start Nginx to serve the app

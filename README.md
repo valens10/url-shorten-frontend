@@ -46,17 +46,6 @@ export const environment = {
   apiUrl: 'http://localhost:8000'
 };
 ```
-
-## Docker Setup
-To run the frontend using Docker:
-```sh
-# Build the Docker image
-docker build -t url-shortener-frontend .
-
-# Run the container
-docker run -p 4200:4200 url-shortener-frontend
-```
-
 ## API Integration
 The frontend communicates with the backend API for authentication, URL shortening, and analytics. Ensure the backend is running and update `apiUrl` in the environment file accordingly.
 
