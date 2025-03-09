@@ -1,0 +1,5 @@
+<url_shorten-navbar class="top-bar" (sidebarToggle)="onSidebarToggle()"></url_shorten-navbar>
+<url_shorten-sidebar class="top-bar__side-bar" [class.open]="isSidebarOpen"></url_shorten-sidebar>
+<div class="top-bar__content-section">
+    <router-outlet></router-outlet> <!-- Main content of the app -->
+</div>
