@@ -63,6 +63,14 @@ This project can be deployed using any web server that supports Angular apps. Fo
 ```sh
 docker-compose up -d
 ```
+## Screenshots
+
+![image](https://github.com/user-attachments/assets/aa40cf99-9acf-4248-bdca-b8d867c5c2ae)
+![image](https://github.com/user-attachments/assets/3b514b46-c1cf-4370-a584-dff1dec66b67)
+![image](https://github.com/user-attachments/assets/f4acaba6-9658-4c87-bc3b-dea9d6a80ed8)
+
+
+
 
 ### Author
 Developed by **Valens** 🚀
