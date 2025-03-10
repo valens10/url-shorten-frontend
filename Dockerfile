@@ -1,18 +1,17 @@
-# Use official Node.js image as base
-FROM node:18-alpine AS build-stage
+# Use official Node.js image
+FROM node:18-alpine
+
 WORKDIR /app
 
-# Install dependencies and build the app
+# Copy package files and install dependencies
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --prefer-offline
 
+# Copy project files
 COPY . .
-RUN npm run build
 
-# Use Nginx for serving the built application
-FROM nginx:alpine AS production-stage
+# Expose Angular's default development port
+EXPOSE 4200
 
-COPY --from=build-stage /app/dist/url-shorten /usr/share/nginx/html
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]  # Start Nginx to serve the app
+# Run Angular development server
+CMD ["npm", "run", "start"]
