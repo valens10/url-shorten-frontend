@@ -69,13 +69,13 @@
                                 <!-- Register buttons -->
                                 <div class="text-center">
                                     <p>or sign in with:</p>
-                                    <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                        class="btn btn-link btn-floating mx-1">
+                                    <button (click)="loginWithGoogle()" type="button" data-mdb-button-init
+                                        data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
                                         <i class="fab fa-google"></i>
                                     </button>
 
-                                    <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                        class="btn btn-link btn-floating mx-1">
+                                    <button (click)="loginWithGitHub()" type="button" data-mdb-button-init
+                                        data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
                                         <i class="fab fa-github"></i>
                                     </button>
                                 </div>

@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  today = new Date().getFullYear();
 
   constructor(
     private router: Router,

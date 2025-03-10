@@ -5,6 +5,7 @@ import { ApiService } from '../../service/api-service.service';
 import Swal from 'sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isSubmitting = false;
+  host_name = environment.HOST_NAME
 
   constructor(private fb: FormBuilder,
     private apiSerice: ApiService,
@@ -63,6 +65,14 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  loginWithGoogle() {
+    window.location.href = `${this.host_name}/social/login/google-oauth2/`;
+  }
+
+  loginWithGitHub() {
+    window.location.href = `${this.host_name}/social/login/github/`;
+  }
+
 
   errAlert(msg: any) {
     Swal.fire({
@@ -73,5 +83,6 @@ export class LoginComponent implements OnInit {
       confirmButtonText: 'Okay'
     })
   }
+
 }
 

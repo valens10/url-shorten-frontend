@@ -98,4 +98,16 @@ export class ApiService {
     return this.http.post(this.BASE_URL + endpoint, data, this.headers)
   }
 
+  // Function to exchange the code and get the token
+  get_user_data(token: string) {
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Token ${token}`,
+      }),
+    };
+    return this.http.get(`${this.BASE_URL}/auth/get_user_data`, headers);
+  }
+
 }
