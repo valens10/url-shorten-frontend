@@ -12,13 +12,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <h5>Shortened URL:</h5>
-                    <a [href]="host_name + urlData.shortened_url" target="_blank" class="text-decoration-none">
+                    <a [href]="host_name + urlData.short_code" target="_blank" class="text-decoration-none">
                         <p>{{ urlData.short_code }}</p>
                     </a>
                 </div>
                 <div class="col-md-6">
                     <h5>Original URL:</h5>
-                    <a [href]="host_name + urlData.shortened_url" target="_blank" class="text-decoration-none">
+                    <a [href]="host_name + urlData.short_code" target="_blank" class="text-decoration-none">
                         <p>{{ urlData.long_url }}</p>
                     </a>
                 </div>

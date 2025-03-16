@@ -7,8 +7,8 @@ services:
     ports:
       - "4200:4200"
     environment:
-      - BASE_URL=http://localhost:8000
-      - HOST_NAME=http://localhost:8000
+      - BASE_URL=http://localhost:8001
+      - HOST_NAME=http://localhost:8001
     volumes:
       - .:/app # Mount local files for live updates
       - /app/node_modules # Prevent overwriting node_modules

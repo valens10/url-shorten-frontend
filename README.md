@@ -61,7 +61,7 @@ The frontend communicates with the backend API for authentication, URL shortenin
 ## Deployment
 This project can be deployed using any web server that supports Angular apps. For Docker-based deployment:
 ```sh
-docker-compose up -- build
+docker-compose up -- build -d
 ```
 ## Screenshots
 

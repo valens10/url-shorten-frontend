@@ -83,17 +83,33 @@ export class LinksComponent implements OnInit {
   }
 
   copyToClipboard(text: string) {
-    // Use the Clipboard API to copy the text to the clipboard
-    navigator.clipboard.writeText(text).then(
-      () => {
-        Swal.fire('Success', 'Copied to clipboard', 'success')
-      },
-      (err) => {
-        console.error('Failed to copy: ', err);
-        alert('Failed to copy URL.');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        () => {
+          Swal.fire('Success', 'Copied to clipboard', 'success');
+        },
+        (err) => {
+          console.error('Failed to copy: ', err);
+          alert('Failed to copy URL.');
+        }
+      );
+    } else {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        Swal.fire('Success', 'Copied to clipboard', 'success');
+      } catch (err) {
+        console.error('Fallback: Failed to copy', err);
       }
-    );
+      document.body.removeChild(textArea);
+    }
   }
+
+
 
   onSearch(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

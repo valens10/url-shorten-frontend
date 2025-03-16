@@ -58,7 +58,7 @@ export class ApiService {
   }
 
   delete_url(url_id: any): Observable<any> {
-    const endpoint = '/auth/delete_url/' + url_id;
+    const endpoint = '/api/delete_url/' + url_id;
     return this.http.delete(this.BASE_URL + endpoint, this.headers)
   }
 
