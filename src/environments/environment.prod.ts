@@ -1,4 +1,4 @@
-export const API_URL = (window as any).__env?.API_URL;
+export const API_URL = (window as any).__env?.API_URL || 'https://url-shortening-api-dnof.onrender.com';
 export const environment = {
   production: true,
   BASE_URL: API_URL,
