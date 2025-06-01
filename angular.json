@@ -30,6 +30,11 @@
                 "glob": "**/*",
                 "input": "public",
                 "output": "assets"
+              },
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "."
               }
             ],
             "styles": [
