@@ -1,17 +1,30 @@
-# Use official Node.js image
-FROM node:18-alpine
-
+# Step 1: Build the Angular app
+FROM node:20-alpine AS builder
 WORKDIR /app
-
-# Copy package files and install dependencies
-COPY package.json package-lock.json ./
-RUN npm ci --no-audit --prefer-offline
-
-# Copy project files
 COPY . .
+RUN npm install && npm run build
 
-# Expose Angular's default development port
-EXPOSE 4200
+# Step 2: Serve with Nginx
+FROM nginx:alpine
 
-# Run Angular development server
-CMD ["npm", "run", "start"]
+# Install envsubst (from gettext)
+RUN apk add --no-cache gettext
+
+# Copy built Angular app from the builder stage
+COPY --from=builder /app/dist/url_shorten /usr/share/nginx/html
+
+# Copy custom nginx config (optional)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy the template env file
+COPY ./src/assets/env.template.js /usr/share/nginx/html/assets/env.template.js
+
+# Copy the entrypoint.sh script into the container
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Set the entry point to run entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
