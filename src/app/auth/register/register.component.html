@@ -100,7 +100,8 @@
                                             class="text-danger">*</span></label>
                                     <div *ngIf="f['password'].touched && f['password'].invalid" class="text-danger">
                                         <div *ngIf="f['password'].hasError('pattern')">Password must contain at least
-                                            URL is required.</div>
+                                            one lowercase letter, one uppercase letter, one number, and one special
+                                            character.</div>
                                     </div>
                                 </div>
 

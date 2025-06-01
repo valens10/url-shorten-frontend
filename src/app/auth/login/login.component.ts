@@ -54,8 +54,6 @@ export class LoginComponent implements OnInit {
       this.isSubmitting = false;
 
       let data = res.data
-      data['token_expiry'] = new Date().getTime() + 15 * 60 * 1000 // Adding 15 minutes expiration time
-
       window.sessionStorage.setItem('user', JSON.stringify(data))
       window.location.href = '/home/dashboard'
 

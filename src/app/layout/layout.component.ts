@@ -12,17 +12,16 @@ import { ApiService } from '../service/api-service.service';
   imports: [SidebarComponent, NavbarComponent, RouterModule, CommonModule, HttpClientModule],
   providers: [ApiService],
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']  // Fixed 'styleUrls' issue
+  styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
   title: string = "Url Shorten";
   isSidebarOpen: boolean = true;
-
   user: any = '';
 
   constructor(
     private router: Router,
-    private apiSerice: ApiService,
+    private apiService: ApiService,
   ) {
     this.user = JSON.parse(
       window.sessionStorage.getItem('user') as string);
@@ -30,19 +29,34 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.user) {
-      this.router.navigate(['auth/login']);  // Redirect to login page if user not logged in yet.
+      this.router.navigate(['auth/login']);
       return;
     }
 
-    const token_expiry = this.user?.token_expiry;
-    // Check if the token is expired (15 minutes threshold)
-    if (token_expiry) {
-      const currentTime = new Date().getTime();
-      const expirationTime = new Date(token_expiry).getTime();
+    // Check token expiry every 5 minutes
+    setInterval(() => { this.checkTokenExpiry(); }, 5 * 60 * 1000);
 
-      // If token expired or about to expire
-      if ((currentTime - expirationTime) >= 15 * 60 * 1000) {
-        this.refresh_token();
+    // Initial check
+    this.checkTokenExpiry();
+  }
+
+  private checkTokenExpiry() {
+    if (this.user?.token) {
+      try {
+        // Decode the JWT token to get expiry
+        const tokenParts = this.user.token.split('.');
+        if (tokenParts.length == 3) {
+          const payload = JSON.parse(atob(tokenParts[1]));
+          const expiryTime = payload.exp * 1000; // Convert to milliseconds
+          const currentTime = new Date().getTime();
+
+          // If token expires in less than 5 minutes, refresh it
+          if (expiryTime - currentTime < 5 * 60 * 1000) {
+            this.refresh_token();
+          }
+        }
+      } catch (error) {
+        console.error('Error checking token expiry:', error);
       }
     }
   }
@@ -51,10 +65,20 @@ export class LayoutComponent implements OnInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-
   refresh_token() {
-    this.apiSerice.refresh_token().subscribe((res) => {
-      window.sessionStorage.setItem('user', JSON.stringify(res?.data))
+    const param = {
+      refresh: this.user.token_refresh
+    }
+    this.apiService.refresh_token(param).subscribe({
+      next: (res) => {
+        // already set new values in the service
+      },
+      error: (error) => {
+        console.error('Token refresh failed:', error);
+        // If refresh fails, redirect to login
+        window.sessionStorage.removeItem('user');
+        this.router.navigate(['/auth/login']);
+      }
     });
   }
 }

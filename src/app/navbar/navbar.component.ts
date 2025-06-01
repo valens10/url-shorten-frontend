@@ -17,7 +17,9 @@ export class NavbarComponent {
   @Output() sidebarToggle = new EventEmitter<boolean>();
 
   toggleSidebar: boolean = false;
-
+  searchTerm = '';
+  showDropdown = false;
+  user: any = JSON.parse(sessionStorage.getItem('user') || '{}');
   constructor(
     private apiSerice: ApiService,
     private router: Router
@@ -30,10 +32,30 @@ export class NavbarComponent {
     this.sidebarToggle.emit(this.toggleSidebar);
   }
 
+  onInput() {
+    this.showDropdown = !!this.searchTerm;
+  }
+
+  onSearch() {
+    this.showDropdown = false;
+    if (this.searchTerm) {
+      this.navigateTo('links');
+    }
+  }
+
+  navigateTo(category: string) {
+    this.showDropdown = false;
+    if (category == 'links') {
+      this.router.navigate(['/home/links'], { queryParams: { q: this.searchTerm } });
+    } else if (category == 'analytics') {
+      this.router.navigate(['/home/link-analytics'], { queryParams: { q: this.searchTerm } });
+    }
+  }
 
   logout() {
     this.apiSerice.logout().subscribe(() => {
       localStorage.clear();
+      sessionStorage.clear();
       window.location.href = '/auth/login'
     });
   }

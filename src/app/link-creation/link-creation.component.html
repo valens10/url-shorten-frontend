@@ -1,32 +1,40 @@
-<div class="container">
-    <div class="w-100  mb-16">
-        <h1 class="orb-typography h1">Create a link</h1>
-        <p class="text-muted">Create a link to be shortened</p>
+<div class="container bg-white m-3 p-3">
+    <div class="container-fluid">
+        <div class="text-center">
+            <h1 class="h3 fw-bold text-primary mb-2">Create a link</h1>
+            <p class="text-muted mb-0">Create a link to be shortened</p>
+        </div>
     </div>
+</div>
 
-    <div class="d-flex justify-content-center align-items-center min-vh-50">
-        <div class="content w-75">
-            <div class="card shadow">
-                <div class="card-body">
-                    <form [formGroup]="urlForm" class="p-4">
-                        <div class="mb-3">
-                            <label for="Long" class="form-label">Long URL <span class="text-danger">*</span></label>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card border-0 shadow-sm rounded-2">
+                <div class="card-body p-4">
+                    <form [formGroup]="urlForm">
+                        <div class="mb-4">
+                            <label for="name" class="form-label fw-semibold">Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" formControlName="name" class="form-control" id="name">
+                        </div>
+                        <div class="mb-4">
+                            <label for="Long" class="form-label fw-semibold">Long URL <span
+                                    class="text-danger">*</span></label>
                             <input type="text" formControlName="long_url" class="form-control" id="Long">
                         </div>
                     </form>
                 </div>
             </div>
 
-            <div class="text-center mt-3">
-                <button [disabled]="urlForm.invalid || isSubmitting" class="btn  btn-primary me-3" (click)="onSubmit()">
-                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm" role="status"
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <button [disabled]="urlForm.invalid || isSubmitting" class="btn btn-primary px-4" (click)="onSubmit()">
+                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status"
                         aria-hidden="true"></span>
-
-                    Create Link</button>
-                <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+                    Create Link
+                </button>
+                <button class="btn btn-outline-danger px-4" (click)="cancel()">Cancel</button>
             </div>
         </div>
     </div>
-
-
 </div>

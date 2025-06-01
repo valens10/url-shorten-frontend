@@ -24,3 +24,94 @@
     object-fit: cover;
     overflow: hidden;
 }
+
+.dashboard-card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    width: 300px;
+    margin: 0;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .image-block {
+        padding: 0.5rem;
+        text-align: center;
+        background-color: #f3f9fe;
+        border-radius: 6px;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            max-height: 60px;
+            transition: transform 0.3s ease;
+        }
+    }
+
+    .card-title {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .btn-primary {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+.block-container {
+    background: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.875rem;
+
+    .fa-heart {
+        animation: heartbeat 1.5s ease infinite;
+        font-size: 0.875rem;
+    }
+}
+
+.card {
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+    }
+}
+
+.fa-heart {
+    animation: heartbeat 1.5s ease infinite;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

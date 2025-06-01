@@ -1,65 +1,72 @@
-<div id="layoutSidenav_content" style="display: flex; flex-direction: column; height: 100vh;">
+<div id="layoutSidenav_content" class="container d-flex flex-column h-100">
     <main>
         <div class="container-fluid px-4">
-            <ol class="breadcrumb mb-4">
+            <ol class="breadcrumb mb-3">
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
-            <div class="block-container justify-content-center flex-wrap background-white p-24 border-radius-8">
-
-                <div class="row bg-light p-5">
+            <div class="bg-light rounded p-3">
+                <div class="row g-3 justify-content-start">
                     <!-- Card-section  -->
-                    <div class="col col-card">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="image-block">
-                                        <img class="img" src="assets/img/bitly_links.png" alt="">
+                    <div class="col-auto">
+                        <div class="card shadow-sm h-100" style="width: 300px;">
+                            <div class="card-body p-3">
+                                <div class="row align-items-center">
+                                    <div class="col-4">
+                                        <div class="bg-light rounded p-2 text-center">
+                                            <img class="img-fluid" src="assets/img/bitly_links.png" alt="URL Shortener"
+                                                style="max-height: 60px;">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col d-flex">
-                                    <div class="align-content-center justify-content-center align-items-center">
-                                        <h5 class="text-align-center text-primary">Make it short</h5>
-                                        <button (click)="gotoLinks()" class="orb-button text-primary secondary-brand"
-                                            tabindex="0">Go
-                                            to links
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col col-card">
-                        <div class="card">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="image-blockx">
-                                        <img class="img-pi" src="assets/img/pie-chart.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="col d-flex">
-                                    <div class="align-content-center justify-content-center align-items-center">
-                                        <h5 class="text-align-center">Analytics</h5>
-                                        <button routerLink="/home/link-analytics"
-                                            class="orb-button border-0 secondary-brand" tabindex="0">Check analytics
-                                        </button>
+                                    <div class="col-8">
+                                        <div class="text-center text-md-start">
+                                            <h5 class="card-title text-primary mb-2">Make it short</h5>
+                                            <p class="card-text text-muted small mb-2">Create short, memorable links</p>
+                                            <button (click)="gotoLinks()" class="btn btn-primary btn-sm w-100">
+                                                Go to links
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="col-auto">
+                        <div class="card shadow-sm h-100" style="width: 300px;">
+                            <div class="card-body p-3">
+                                <div class="row align-items-center">
+                                    <div class="col-4">
+                                        <div class="bg-light rounded p-2 text-center">
+                                            <img class="img-fluid" src="assets/img/pie-chart.png" alt="Analytics"
+                                                style="max-height: 60px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="text-center text-md-start">
+                                            <h5 class="card-title text-primary mb-2">Analytics</h5>
+                                            <p class="card-text text-muted small mb-2">Track link performance</p>
+                                            <button routerLink="/home/link-analytics"
+                                                class="btn btn-primary btn-sm w-100">
+                                                Check analytics
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
     </main>
-    <footer class="py-4 bg-light mt-auto">
+    <footer class="py-2 bg-light mt-auto border-top">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="text-muted">Copyright &copy; Url Shorten {{today}}</div>
-                <div>
-                    <p>Crafted with with love</p>
+                <div class="d-flex align-items-center">
+                    <span class="text-muted me-1">Crafted with</span>
+                    <i class="fas fa-heart text-danger"></i>
+                    <span class="text-muted ms-1">love</span>
                 </div>
             </div>
         </div>

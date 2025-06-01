@@ -26,6 +26,7 @@
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.17.2",
     "tslib": "^2.3.0",
+    "url_shorten": "file:",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

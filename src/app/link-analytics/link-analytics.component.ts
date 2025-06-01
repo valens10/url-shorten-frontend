@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiService } from '../service/api-service.service';
 
 @Component({
@@ -13,10 +13,14 @@ import { ApiService } from '../service/api-service.service';
   styleUrl: './link-analytics.component.scss'
 })
 export class LinkAnalyticsComponent implements OnInit {
+  searchTerm: string = '';
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.searchTerm = params['q'] || '';
+    });
 
     this.get_user_url();
   }
@@ -36,6 +40,10 @@ export class LinkAnalyticsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.filterResults = this.user_urls.filter((element: any) => {
       return (
+        element.name
+          ?.trim()
+          .toLowerCase()
+          .includes(filterValue.trim().toLowerCase()) ||
         element.short_code
           ?.trim()
           .toLowerCase()

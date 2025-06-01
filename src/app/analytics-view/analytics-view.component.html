@@ -1,81 +1,125 @@
 <div class="container">
-    <div class="w-100  mb-16">
-        <h1 class="orb-typography h1">Link Analytics</h1>
+    <div class="w-100 mb-4">
+        <h1 class="orb-typography h1 text-primary">Link Analytics</h1>
+        <p class="text-muted">Detailed analytics for your shortened URL</p>
     </div>
 
-
-    <div class="card  my-5">
-        <div class="card-header">
-            <h5 class="mb-0">URL Analytics</h5>
+    <div class="card shadow-sm my-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0 text-primary">URL Information</h5>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>Shortened URL:</h5>
-                    <a [href]="host_name + urlData.short_code" target="_blank" class="text-decoration-none">
-                        <p>{{ urlData.short_code }}</p>
-                    </a>
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-2">Shortened URL</h6>
+                        <a [href]="host_name + urlData.short_code" target="_blank" class="text-decoration-none">
+                            <p class="mb-0 text-primary">{{ urlData.short_code }}</p>
+                        </a>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <h5>Original URL:</h5>
-                    <a [href]="host_name + urlData.short_code" target="_blank" class="text-decoration-none">
-                        <p>{{ urlData.long_url }}</p>
-                    </a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Total Clicks:</h5>
-                    <p>{{ urlData.total_clicks }}</p>
-                </div>
-                <div class="col-md-6">
-                    <h5>Created At:</h5>
-                    <p>{{ urlData.created_at | date: 'yyyy-MM-dd HH:mm' }}</p>
-                </div>
-            </div>
-
-            <hr>
-
-            <h5>Click Distribution:</h5>
-            <div class="row">
-                <div class="col-md-4">
-                    <h6>Daily</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between"
-                            *ngFor="let day of getClickDistribution(urlData.click_distribution?.daily)">
-                            <p>{{ day.key }}</p>
-                            <p>
-                                {{ day.value }} Click{{ day.value > 1 ? 's' : '' }}
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h6>Weekly</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between"
-                            *ngFor="let week of getClickDistribution(urlData.click_distribution?.weekly)">
-                            <p>{{ week.key }}</p>
-                            <p>{{ week.value }} Click{{ week.value > 1 ? 's' : '' }}</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h6>Monthly</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between"
-                            *ngFor="let month of getClickDistribution(urlData.click_distribution?.monthly)">
-                            <p>{{ month.key }}</p> <!-- Displaying the month key (e.g., '2025-03') -->
-                            <p>{{ month.value }} Click{{ month.value > 1 ? 's' : '' }}</p>
-                            <!-- Displaying the number of clicks -->
-                        </li>
-
-                    </ul>
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-2">Original URL</h6>
+                        <a [href]="urlData.long_url" target="_blank" class="text-decoration-none">
+                            <p class="mb-0 text-primary text-truncate">{{ urlData.long_url }}</p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-primary mb-2">{{ urlData.total_clicks }}</div>
+                    <h6 class="text-muted">Total Clicks</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="h4 text-primary mb-2">{{ urlData.created_at | date: 'MMM d, y' }}</div>
+                    <h6 class="text-muted">Created Date</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-primary mb-2">{{ urlData.referrer_analytics?.length || 0 }}</div>
+                    <h6 class="text-muted">Unique Referrers</h6>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="card shadow-sm my-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0 text-primary">Click Distribution</h5>
+        </div>
+        <div class="card-body">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="clickDistributionChartOptions"
+                style="width: 100%; height: 400px; display: block;">
+            </highcharts-chart>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 text-primary">Top Referrers</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th class="text-end">Clicks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ref of urlData.referrer_analytics">
+                                    <td>{{ ref.referrer || 'Direct' }}</td>
+                                    <td class="text-end">{{ ref.count }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 text-primary">Recent Activity</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>IP Address</th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let click of urlData.recent_clicks">
+                                    <td>{{ click.clicked_at | date: 'MMM d, HH:mm' }}</td>
+                                    <td>{{ click.ip_address || 'N/A' }}</td>
+                                    <td>{{ click.country || 'Unknown' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

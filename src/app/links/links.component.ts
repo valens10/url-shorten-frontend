@@ -5,7 +5,7 @@ import { ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { ApiService } from '../service/api-service.service';
 import Swal from 'sweetalert2';
 import { environment } from '../../environments/environment';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-links',
   standalone: true,
@@ -16,16 +16,21 @@ import { RouterLink } from '@angular/router';
 })
 export class LinksComponent implements OnInit {
   host_name: any = environment.HOST_NAME + '/api/redirect_url/'
+  isLoading: boolean = false;
+  searchTerm: string = '';
 
   constructor(private fb: FormBuilder,
     private apiSerice: ApiService,
-    private _location: Location
+    private _location: Location,
+    private route: ActivatedRoute
 
   ) {
   }
 
   ngOnInit(): void {
-
+    this.route.queryParams.subscribe((params) => {
+      this.searchTerm = params['q'] || '';
+    });
     this.get_user_url();
   }
 
@@ -70,7 +75,7 @@ export class LinksComponent implements OnInit {
         allowOutsideClick: false,
         confirmButtonText: 'Okay'
       }).then((result) => {
-        this._location.back();
+        window.location.reload();
       })
     }, err => {
       this.isSubmitting = false;
@@ -86,11 +91,17 @@ export class LinksComponent implements OnInit {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(
         () => {
-          Swal.fire('Success', 'Copied to clipboard', 'success');
+          // Show success message after 2 seconds dismiss automatically and loader
+          Swal.fire({
+            title: 'Success',
+            text: 'Copied to clipboard',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
         },
         (err) => {
           console.error('Failed to copy: ', err);
-          alert('Failed to copy URL.');
         }
       );
     } else {
@@ -115,6 +126,10 @@ export class LinksComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.filterResults = this.user_urls.filter((element: any) => {
       return (
+        element.name
+          ?.trim()
+          .toLowerCase()
+          .includes(filterValue.trim().toLowerCase()) ||
         element.short_code
           ?.trim()
           .toLowerCase()
@@ -130,12 +145,59 @@ export class LinksComponent implements OnInit {
       );
     });
   }
+  quickDateFilter(data: Event) {
+    this.isLoading = true;
+    const option = (data.target as HTMLSelectElement).value;
+
+    const now = new Date();
+    let start: Date | null = null;
+    let end: Date | null = null;
+
+    if (option === 'today') {
+      start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    } else if (option === '7days') {
+      start = new Date(now);
+      start.setDate(now.getDate() - 7);
+      end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    } else if (option === 'month') {
+      start = new Date(now.getFullYear(), now.getMonth(), 1);
+      end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+    } else if (option === 'last_month') {
+      start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      end = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59);
+    }
+
+    if (start && end) {
+      this.filterResults = this.user_urls.filter((item: any) => {
+        const created = new Date(item.created_at);
+        return created >= start && created <= end;
+      });
+    } else {
+      this.filterResults = [...this.user_urls];
+    }
+
+    // Simulate a small delay to show loading state
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 300);
+  }
 
   errAlert(msg: any) {
     Swal.fire({
       title: 'Error',
       text: msg,
       icon: 'error',
+      confirmButtonColor: 'green',
+      confirmButtonText: 'Okay'
+    })
+  }
+
+  // view plans coming soon
+  viewPlans() {
+    Swal.fire({
+      title: 'Coming soon',
+      text: 'This feature is coming soon',
       confirmButtonColor: 'green',
       confirmButtonText: 'Okay'
     })

@@ -2,6 +2,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,13 +34,13 @@ export class ApiService {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          Authorization: `Token ${this.user.token}`,
+          Authorization: `Bearer ${this.user.token}`,
         }),
       };
 
       this.fHeaders = {
         headers: new HttpHeaders({
-          Authorization: `Token ${this.user.token}`,
+          Authorization: `Bearer ${this.user.token}`,
         }),
       };
 
@@ -64,13 +65,42 @@ export class ApiService {
 
   logout(): Observable<any> {
     const endpoint = '/auth/logout';
-    return this.http.get(this.BASE_URL + endpoint, this.headers)
+    const data = {
+      refresh_token: this.user.token_refresh
+    }
+    return this.http.post(this.BASE_URL + endpoint, data, this.headers)
   }
 
-  refresh_token(): Observable<any> {
-    const endpoint = '/auth/refresh_token';
-    return this.http.get(this.BASE_URL + endpoint, this.headers)
+  refresh_token(data: any): Observable<any> {
+    const endpoint = '/auth/token_refresh';
+    return this.http.post(this.BASE_URL + endpoint, data, this.headers).pipe(
+      tap((response: any) => {
+        if (response) {
+          // Update the user data with new tokens
+          this.user['token'] = response.access;
+          this.user['token_refresh'] = response.refresh;
+
+          window.sessionStorage.setItem('user', JSON.stringify(this.user));
+
+          // Update headers with new token
+          this.headers = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `Bearer ${this.user.token}`,
+            }),
+          };
+
+          this.fHeaders = {
+            headers: new HttpHeaders({
+              Authorization: `Bearer ${this.user.token}`,
+            }),
+          };
+        }
+      })
+    );
   }
+
 
   get_user_url(): Observable<any> {
     const endpoint = '/api/urls';
@@ -104,7 +134,7 @@ export class ApiService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Token ${token}`,
+        Authorization: `Bearer ${token}`,
       }),
     };
     return this.http.get(`${this.BASE_URL}/auth/get_user_data`, headers);

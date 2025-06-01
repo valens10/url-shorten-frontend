@@ -25,13 +25,11 @@ export class CheckUserAccessComponent implements OnInit {
       if (token) {
         // Exchange the code for the token
         this.authService.get_user_data(token).subscribe((response: any) => {
-          // Store the token
-          let data = response.data
-          data['token_expiry'] = new Date().getTime() + 15 * 60 * 1000 // Adding 15 minutes expiration time
-          data['token'] = token
 
+          let data = response.data
           window.sessionStorage.setItem('user', JSON.stringify(data))
           window.location.href = '/home/dashboard'
+
         }, (error) => {
           this.router.navigate(['/auth/login']);
         });

@@ -31,6 +31,7 @@ export class LinkCreationComponent {
 
   createForm(): void {
     this.urlForm = this.fb.group({
+      name: ['', [Validators.required]],
       long_url: ['', [Validators.required]],
     });
   }

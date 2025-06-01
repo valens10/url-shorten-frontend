@@ -9,7 +9,7 @@
             <div class="col-5">
                 <div class="flex-grow-1">
                     <input (keyup)="onSearch($event)" class="form-control border-0" type="text"
-                        placeholder="Search links..">
+                        placeholder="Search links..." [(ngModel)]="searchTerm" />
                 </div>
             </div>
 
@@ -19,10 +19,10 @@
 
     <div class="card">
         <div class="card-body">
-            <table class="table table-hover table-bordered border-primary">
-                <thead>
+            <table class="table table-hover">
+                <thead class="table-primary">
                     <tr>
-                        <th scope="col">ID#</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Short Code</th>
                         <th scope="col">clicks</th>
                         <th scope="col">Created At</th>
@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of filterResults" routerLink="/home/link-analytics/{{item?.short_code}}">
-                        <th scope="row">{{item?.id}}</th>
+                        <th scope="row">{{item?.name}}</th>
                         <td>{{item?.short_code}}</td>
                         <td>{{item?.clicks}}</td>
                         <td>{{item?.created_at | date}}</td>
