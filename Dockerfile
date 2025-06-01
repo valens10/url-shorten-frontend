@@ -1,30 +1,30 @@
-# Step 1: Build the Angular app
-FROM node:20-alpine AS builder
+# Build and serve Angular app
+FROM node:20-alpine
+
 WORKDIR /app
+
+# Copy package files first to leverage Docker cache
+COPY package*.json ./
+RUN npm ci
+
+# Copy source files
 COPY . .
-RUN npm install && npm run build
 
-# Step 2: Serve with Nginx
-FROM nginx:alpine
+# Build the app with production configuration
+ENV NODE_ENV=production
+RUN npx ng build --configuration=production
 
-# Install envsubst (from gettext)
-RUN apk add --no-cache gettext
+# Install serve to run the built app
+RUN npm install -g serve
 
-# Copy built Angular app from the builder stage
-COPY --from=builder /app/dist/url_shorten /usr/share/nginx/html
+# Create start script
+RUN echo '#!/bin/sh' > /app/start.sh && \
+    echo 'echo "window.__env = { API_URL: \"$API_URL\" };" > /app/dist/url_shorten/browser/assets/env.js' >> /app/start.sh && \
+    echo 'serve -s /app/dist/url_shorten/browser -l 4200' >> /app/start.sh && \
+    chmod +x /app/start.sh
 
-# Copy custom nginx config (optional)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expose port 4200
+EXPOSE 4200
 
-# Copy the template env file
-COPY ./src/assets/env.template.js /usr/share/nginx/html/assets/env.template.js
-
-# Copy the entrypoint.sh script into the container
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Set the entry point to run entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start the app with environment variable handling
+CMD ["/bin/sh", "/app/start.sh"]

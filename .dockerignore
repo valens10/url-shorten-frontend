@@ -5,3 +5,13 @@ dist
 Dockerfile
 docker-compose.yml
 *.log
+.env
+.env.*
+*.md
+.vscode
+.idea
+coverage
+.angular
+.cache
+tmp
+temp

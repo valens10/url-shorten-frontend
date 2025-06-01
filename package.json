@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "postbuild": "npm run start"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -24,7 +23,7 @@
     "highcharts": "^12.1.2",
     "highcharts-angular": "^4.0.1",
     "rxjs": "~7.8.0",
-    "sweetalert2": "^11.17.2",
+    "sweetalert2": "^11.22.0",
     "tslib": "^2.3.0",
     "url_shorten": "file:",
     "zone.js": "~0.15.0"
